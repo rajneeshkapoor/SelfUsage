@@ -1,0 +1,7 @@
+---
+# This playbook will deploy the GIN Signature Mapping Portal IIS application.
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - one

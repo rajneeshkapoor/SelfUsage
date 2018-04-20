@@ -1,0 +1,7 @@
+- name: Three .....
+  shell: echo $PS1
+- name: Common Role
+  include_role:
+    name: common
+- name: Print var .....
+  debug: msg="Variable {{ role }}"
