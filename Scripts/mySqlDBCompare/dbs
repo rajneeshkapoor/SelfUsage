@@ -1,0 +1,7 @@
+cinder
+glance
+gnocchi
+keystone
+neutron
+nova
+nova_api
