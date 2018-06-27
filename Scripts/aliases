@@ -1,0 +1,25 @@
+collectLogs ()
+{
+	sourceDir="/var/log"
+	wlLogDir="${sourceDir}/workloadmgr/"
+	targetDir="$HOME/tVaultLogs_`date +%m%d%y_%H%M%S`"
+	cmdOut="${targetDir}/cmdOut.txt"
+	echo ${targetDir}
+	
+	CMD_1="pcs status"
+	CMD_2="pcs constraint show --full"
+	
+	mkdir -p ${targetDir}/${wlLogDir}
+	date > ${cmdOut}
+	echo -e "\n${CMD_1}\n" >> ${cmdOut}
+	${CMD_1} >> ${cmdOut}
+	echo -e "\n${CMD_2}\n" >> ${cmdOut}
+	${CMD_2} >> ${cmdOut}
+	date >> ${cmdOut}
+	
+	cp ${sourceDir}/{syslog,haproxy.log,pacemaker.log} ${targetDir}/
+	cp ${wlLogDir}/*.log ${targetDir}/${wlLogDir}
+
+	tar -cvf ${targetDir}.tar ${targetDir}/
+	gzip ${targetDir}.tar
+}
