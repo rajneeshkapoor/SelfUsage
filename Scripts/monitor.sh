@@ -1,22 +1,32 @@
 #set -x
 setVars()
 {
-	workloadFile="inputData/WLs.txt"
+	baseDir="/tmp"
+	varsFile="${baseDir}/inputData/vars.txt"
+	tvmPwd="52T8FVYZJse"
+	sendmail="/usr/sbin/sendmail"
+	workloadFile="${baseDir}/inputData/WLs.txt"
 	#workloadFile will be having list of Workload IDs; one ID per line
 	workloadList=`awk 'NF { print "\""$0"\""}' $workloadFile | tr '\n' ',' | sed '$s/,$//'`
-	selectCols="W.DISPLAY_NAME,S.WORKLOAD_ID,S.ID as SNAPSHOT_ID,S.STATUS,S.CREATED_AT,S.UPDATED_AT,S.ERROR_MSG"
-	sqlOut="queryOut.csv"
-	htmlOUT="file.html"
+	selectCols="W.DISPLAY_NAME AS WORKLOAD_NAME,S.WORKLOAD_ID,S.DISPLAY_NAME as SNAPSHOT_NAME,S.ID as SNAPSHOT_ID,S.STATUS as SNAPSHOT_STATUS,S.CREATED_AT,S.UPDATED_AT,S.ERROR_MSG"
+	sqlOut="${baseDir}/queryOut.csv"
+	htmlOUT="${baseDir}/file.html"
 	rm -f ${sqlOut} ${htmlOUT}
+	#sqlColsDel="#" >> UNUSED YET
+	targetTVault=`grep targetTVault ${varsFile} | awk -F'=' '{print $2}' | head -1`
 	mailIDs="rajneesh.kapoor@trilio.io,rajneesh.kapoor@afourtech.com,deepali.pharande@trilio.io,omkar.nawghare@trilio.io"
+	#mailIDs="rajneesh.kapoor@trilio.io"
 }
 
 genHTML()
 {
-	echo "Subject: RHV Report [`date`]" > ${htmlOUT}
+	#sshpass -p52T8FVYZJse  ssh -o StrictHostKeyChecking=no root@149.56.121.111 date
+	tvmDate=`sshpass -p${tvmPwd}  ssh -o StrictHostKeyChecking=no root@${targetTVault} date`
+	echo "Subject: RHV Report [${tvmDate}]" > ${htmlOUT}
 	echo "To: ${mailIDs}" >> ${htmlOUT}
 	awk 'BEGIN{
-	FS=","
+	#Replace by variable pending
+	FS="#"
 	print  "From: RHVScale@trilio.io"
 	print  "MIME-Version: 1.0"
 	print  "Content-Type: text/html"
@@ -37,13 +47,13 @@ genHTML()
 
 execAndGenReport()
 {
-	mysql -e "select ${selectCols} from workloads W INNER JOIN snapshots S on W.id = S.workload_id where W.id in ($workloadList) order by S.created_at desc" | sed "s/\t/,/g" > ${sqlOut}
+	mysql -e "select ${selectCols} from workloads W INNER JOIN snapshots S on W.id = S.workload_id where W.id in ($workloadList) order by S.created_at desc" | sed "s/\t/#/g" > ${sqlOut}
 	genHTML
 }
 
 sendReport()
 {
-	sendmail ${mailIDs} < ${htmlOUT}
+	${sendmail} ${mailIDs} < ${htmlOUT}
 }
 
 setVars
