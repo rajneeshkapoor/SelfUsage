@@ -5,7 +5,7 @@ pipeline {
     stage('Build') {
       steps {
         sh label: '', script: '''echo "Rajneesh Kapoor"
-        mkdir /tmp/RKTest
+        mkdir -p /tmp/RKTest
         date >> /tmp/RKTest/currDate'''
       }
     }
