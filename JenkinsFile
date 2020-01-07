@@ -1,3 +1,11 @@
-sh label: '', script: '''echo "Rajneesh Kapoor"
-mkdir /tmp/RKTest
-date >> /tmp/RKTest/currDate'''
+pipeline {
+  agent any
+  
+  stages {
+    stage('Build') {
+      sh label: '', script: '''echo "Rajneesh Kapoor"
+      mkdir /tmp/RKTest
+      date >> /tmp/RKTest/currDate'''
+    }
+  }
+}
