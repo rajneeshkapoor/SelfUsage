@@ -8,12 +8,16 @@ pipeline {
         mkdir -p /tmp/RKTest
         date >> /tmp/RKTest/currDate'''
       }
+    }
     stage('Deploy') {
         steps {
           sh label: '', script: '''echo "TEST"'''
         }
-     stage('notify') {
-      slackSend (channel: "@${jenkinstrials}", color: '#36A64F', message: "Job failed")
+    }
+    stage('notify') {
+      steps {
+        slackSend (channel: "@${jenkinstrials}", color: '#36A64F', message: "Job failed")
+       }
      }
   }
 }
