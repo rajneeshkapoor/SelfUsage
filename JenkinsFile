@@ -3,9 +3,11 @@ pipeline {
   
   stages {
     stage('Build') {
-      sh label: '', script: '''echo "Rajneesh Kapoor"
-      mkdir /tmp/RKTest
-      date >> /tmp/RKTest/currDate'''
+      steps {
+        sh label: '', script: '''echo "Rajneesh Kapoor"
+        mkdir /tmp/RKTest
+        date >> /tmp/RKTest/currDate'''
+      }
     }
   }
 }
