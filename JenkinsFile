@@ -8,6 +8,11 @@ pipeline {
         mkdir -p /tmp/RKTest
         date >> /tmp/RKTest/currDate'''
       }
+    stage('Build') {
+        steps {
+          sh label: '', script: '''echo "TEST"'''
+        }
+     }
     }
   }
 }
