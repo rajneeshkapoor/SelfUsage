@@ -1,0 +1,1 @@
+CONSTRAINT marks_1_fk_1 FOREIGN KEY (student_id) REFERENCES student_1 (rollnum)
