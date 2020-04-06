@@ -2,8 +2,13 @@
 clear
 fKeysFile="fKeys.txt"
 fKeysTables="fKeysTables.txt"
-dbName="rk_1"
+#dbName="rk_1"
+dbName="workloadmgr"
 infDB="information_schema"
+
+#Foreign key update will take place ONLY if variable exec set to "Y"
+exec="n"
+
 > ${fKeysTables}
 
 #while read x; do fKeysList="${fKeysList},'$x'"; done < ${fKeysFile}
@@ -23,14 +28,15 @@ do
 	fKeyDef=`cat temp`
 	echo -n "${fKeyDef}," >> ${fKeysTables}
 	
-	if (${fKeyRule} != "CASCADE") then
-		
+	if [ ${fKeyRule} == "RESTRICT" ]
+	then
+		fKeyDefNew=`echo "${fKeyDef} ON CASCADE DELETE"`
+		echo ${fKeyDefNew} >> ${fKeysTables}
 	else
-
+		echo "Modifying ${fKey} set on ${fKeyTable} with Rule ${fKeyRule} NOT required"
+		echo "NOT REQUIRED" >> ${fKeysTables}
+		continue
 	fi
-
-	fKeyDefNew=`echo "${fKeyDef} ON CASCADE DELETE"`
-	echo ${fKeyDefNew} >> ${fKeysTables}
 done < ${fKeysFile}
 
 set +x
