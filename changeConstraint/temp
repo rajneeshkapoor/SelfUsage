@@ -1,1 +1,1 @@
-CONSTRAINT marks_2_fk_1 FOREIGN KEY (student_id) REFERENCES student_2 (rollnum)
+CONSTRAINT marks_1_fk_2 FOREIGN KEY (subject_id) REFERENCES subjects_1 (id)

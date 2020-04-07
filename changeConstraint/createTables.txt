@@ -1,0 +1,56 @@
+==================CREATE TABLE START marks_1 ==================
+==================BEFORE==================
+Table	Create Table
+marks_1	CREATE TABLE `marks_1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `marks` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`),
+  KEY `subject_id` (`subject_id`),
+  CONSTRAINT `marks_1_fk_1` FOREIGN KEY (`student_id`) REFERENCES `student_1` (`rollnum`),
+  CONSTRAINT `marks_1_fk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects_1` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1
+==================AFTER==================
+Table	Create Table
+marks_1	CREATE TABLE `marks_1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `marks` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`),
+  KEY `subject_id` (`subject_id`),
+  CONSTRAINT `marks_1_fk_1` FOREIGN KEY (`student_id`) REFERENCES `student_1` (`rollnum`) ON DELETE CASCADE,
+  CONSTRAINT `marks_1_fk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects_1` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1
+==================CREATE TABLE END marks_1 ==================
+==================CREATE TABLE START marks_1 ==================
+==================BEFORE==================
+Table	Create Table
+marks_1	CREATE TABLE `marks_1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `marks` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`),
+  KEY `subject_id` (`subject_id`),
+  CONSTRAINT `marks_1_fk_1` FOREIGN KEY (`student_id`) REFERENCES `student_1` (`rollnum`) ON DELETE CASCADE,
+  CONSTRAINT `marks_1_fk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects_1` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1
+==================AFTER==================
+Table	Create Table
+marks_1	CREATE TABLE `marks_1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `marks` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`),
+  KEY `subject_id` (`subject_id`),
+  CONSTRAINT `marks_1_fk_1` FOREIGN KEY (`student_id`) REFERENCES `student_1` (`rollnum`) ON DELETE CASCADE,
+  CONSTRAINT `marks_1_fk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects_1` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1
+==================CREATE TABLE END marks_1 ==================

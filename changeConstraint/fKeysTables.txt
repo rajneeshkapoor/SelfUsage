@@ -1,2 +1,2 @@
-marks_1_fk_2,RESTRICT,marks_1,CONSTRAINT marks_1_fk_2 FOREIGN KEY (subject_id) REFERENCES subjects_1 (id),CONSTRAINT marks_1_fk_2 FOREIGN KEY (subject_id) REFERENCES subjects_1 (id) ON CASCADE DELETE
-marks_2_fk_1,RESTRICT,marks_2,CONSTRAINT marks_2_fk_1 FOREIGN KEY (student_id) REFERENCES student_2 (rollnum),CONSTRAINT marks_2_fk_1 FOREIGN KEY (student_id) REFERENCES student_2 (rollnum) ON CASCADE DELETE
+marks_1_fk_1,RESTRICT,marks_1,CONSTRAINT marks_1_fk_1 FOREIGN KEY (student_id) REFERENCES student_1 (rollnum),CONSTRAINT marks_1_fk_1 FOREIGN KEY (student_id) REFERENCES student_1 (rollnum) ON DELETE CASCADE
+marks_1_fk_2,RESTRICT,marks_1,CONSTRAINT marks_1_fk_2 FOREIGN KEY (subject_id) REFERENCES subjects_1 (id),CONSTRAINT marks_1_fk_2 FOREIGN KEY (subject_id) REFERENCES subjects_1 (id) ON DELETE CASCADE

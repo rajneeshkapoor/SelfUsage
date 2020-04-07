@@ -2,7 +2,6 @@
 clear
 fKeysFile="fKeys.txt"
 fKeysTables="fKeysTables.txt"
-fKeysTablesMod="fKeysTablesMod.txt"
 dbName="rk_1"
 createTables="createTables.txt"
 #dbName="workloadmgr"
@@ -12,7 +11,6 @@ infDB="information_schema"
 exec="Y"
 
 > ${fKeysTables}
-> ${fKeysTablesMod}
 > ${createTables}
 
 #while read x; do fKeysList="${fKeysList},'$x'"; done < ${fKeysFile}
@@ -27,10 +25,13 @@ dropAndAlterFK()
 	echo "Change ${fKey} >> ${fKeyDef} << to >> ${fKeyDefNew} <<"
 	echo ""
 	#mysql -e "alter table marks drop FOREIGN KEY marks_fk_2" rk_1
-	#mysql -e "alter table marks add CONSTRAINT marks_fk_2 FOREIGN KEY (subject_id) REFERENCES subjects (id) ON  DELETE CASCADE" rk_1
+	#mysql -e "alter table marks add CONSTRAINT marks_fk_2 FOREIGN KEY (subject_id) REFERENCES subjects (id) ON DELETE CASCADE" rk_1
 
-	echo "mysql -e alter table ${fKeyTable} drop FOREIGN KEY ${fKey} ${dbName}"
-	echo "mysql -e alter table ${fKeyTable} add ${fKeyDefNew} ${dbName}"
+	echo "Dropping ${fKey} from ${fKeyTable}"
+	mysql -e "alter table ${fKeyTable} drop FOREIGN KEY ${fKey}" ${dbName}
+
+	echo "Adding Modified ${fKey} to ${fKeyTable}"
+	 mysql -e "alter table ${fKeyTable} add ${fKeyDefNew}" ${dbName}
 }
 while read fKey
 do
@@ -44,13 +45,18 @@ do
 	fKeyDef=`cat temp`
 	echo -n "${fKeyDef}," >> ${fKeysTables}
 	
-	if [ ${fKeyRule} == "RESTRICT" ]
+	echo "## ${fKeyRule} ##"
+	if [ ! -n "${fKeyRule}" ] || [ ${fKeyRule} != "RESTRICT" ]
 	then
+		echo "Modifying ${fKey} set on ${fKeyTable} with Rule ${fKeyRule} NOT required"
+		echo "NOT REQUIRED" >> ${fKeysTables}
+		continue
+	else
 		#mysql -e "show create table setting_metadata" workloadmgr | sed 's/-//g;s/+//g;s/\\n/\n/g'
 		echo "==================CREATE TABLE START ${fKeyTable} ==================" >> ${createTables}
 		echo "==================BEFORE==================" >> ${createTables}
 		mysql -e "show create table ${fKeyTable}" ${dbName} | sed 's/-//g;s/+//g;s/\\n/\n/g' >> ${createTables}
-		fKeyDefNew=`echo "${fKeyDef} ON CASCADE DELETE"`
+		fKeyDefNew=`echo "${fKeyDef} ON DELETE CASCADE"`
 		echo ${fKeyDefNew} >> ${fKeysTables}
 		if [ ${exec} == "Y" ]
 		then
@@ -59,10 +65,6 @@ do
 		echo "==================AFTER==================" >> ${createTables}
 		mysql -e "show create table ${fKeyTable}" ${dbName} | sed 's/-//g;s/+//g;s/\\n/\n/g' >> ${createTables}
 		echo "==================CREATE TABLE END ${fKeyTable} ==================" >> ${createTables}
-	else
-		echo "Modifying ${fKey} set on ${fKeyTable} with Rule ${fKeyRule} NOT required"
-		echo "NOT REQUIRED" >> ${fKeysTables}
-		continue
 	fi
 done < ${fKeysFile}
 
