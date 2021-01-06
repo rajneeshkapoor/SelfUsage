@@ -1,18 +1,29 @@
-pipeline {
-  agent any
-  
-  stages {
-    stage('Build') {
-      steps {
-        sh label: '', script: '''echo "Rajneesh Kapoor"
-        mkdir -p /tmp/RKTest
-        date >> /tmp/RKTest/currDate'''
-      }
-    }
-    stage('Deploy') {
-        steps {
-          sh label: '', script: '''echo "TEST"'''
-        }
-    }
-  }
+#!/usr/bin/env groovy
+
+node('') {
+    def gVar="GlobalVar-1"
+    	
+	stage('Stage-1')
+	{
+    echo gVar
+    sh '''
+        echo ${gVar}
+		    export gVarEx=''' + gVar + '''
+		    ./1.sh
+		    echo ${gVarEx}
+        echo ${gVar}
+		    '''
+	}
+		
+	stage('Stage-2')
+	{
+    echo gVar
+    echo gVarEx
+		sh '''
+        echo ${gVar}
+		    ./2.sh
+		    echo ${gVarEx}
+		    '''
+		echo gVar
+	}
 }
