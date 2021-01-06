@@ -14,10 +14,5 @@ pipeline {
           sh label: '', script: '''echo "TEST"'''
         }
     }
-    stage('notify') {
-      steps {
-        slackSend (channel: "@${jenkinstrials}", color: '#36A64F', message: "Job failed")
-       }
-     }
   }
 }
