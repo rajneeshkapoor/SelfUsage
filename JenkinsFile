@@ -2,7 +2,15 @@
 
 node('') {
     def gVar="GlobalVar-1"
-    	
+
+	stage('Clean Environment') {
+            deleteDir()
+        }
+        
+        stage('Checkout'){
+			checkout scm
+		}
+	
 	stage('Stage-1')
 	{
     echo gVar
