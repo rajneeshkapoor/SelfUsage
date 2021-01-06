@@ -8,9 +8,10 @@ node('') {
     echo gVar
     sh '''
         echo ${gVar}
-		    export gVarEx=''' + gVar + '''
-		    ./1.sh
-		    echo ${gVarEx}
+	pwd
+	export gVarEx=''' + gVar + '''
+	./1.sh
+	echo ${gVarEx}
         echo ${gVar}
 		    '''
 	}
