@@ -8,8 +8,11 @@ node('') {
         }
         
         stage('Checkout'){
-			checkout scm
-		}
+		checkout scm
+		dir('tempest') {
+		git url: 'https://github.com/trilioData/tempest.git'
+    		}
+	}
 	
 	stage('Stage-1')
 	{
