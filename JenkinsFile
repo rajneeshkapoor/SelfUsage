@@ -16,7 +16,7 @@ node('') {
     echo gVar
     sh '''
     	pwd;ls -lrt
-    	source vars.sh
+    	source ./vars.sh
 	chmod 777 1.sh 2.sh
         echo ${gVar}
 	pwd
