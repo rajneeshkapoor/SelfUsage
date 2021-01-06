@@ -15,6 +15,7 @@ node('') {
 	{
     echo gVar
     sh '''
+    	source vars.sh
         echo ${gVar}
 	pwd
 	export gVarEx=''' + gVar + '''
@@ -31,7 +32,6 @@ node('') {
 		sh '''
         echo ${gVar}
 		    ./2.sh
-		    echo ${gVarEx}
 		    '''
 		echo gVar
 	}
