@@ -24,14 +24,15 @@ node('') {
 	./1.sh
 	echo ${gVarEx}
         echo ${gVar}
+	echo ${one}
 		    '''
 	}
 		
 	stage('Stage-2')
 	{
     echo gVar
-    echo gVarEx
 		sh '''
+		echo ${one}
         echo ${gVar}
 		    ./2.sh
 		    '''
