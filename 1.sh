@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+source vars.sh
+
 echo "Start 111"
 echo ${gVar}
 echo ${gVarEx}
