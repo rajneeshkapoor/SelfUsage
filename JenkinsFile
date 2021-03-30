@@ -17,4 +17,8 @@ node('') {
       )
     }
   }
+    
+    stage ('Run Shell Script 1') {
+        echo "Script 1 Stmt 1"
+    }
 }
