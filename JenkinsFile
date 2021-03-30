@@ -10,8 +10,8 @@ node('') {
   stage ('Checkout') {
     dir('TEST1') {
       git(
-      poll: true,
-          url: 'ssh://git@github.com:trilioData/tvo-automation.git',
+      poll: true,//
+          url: 'https://github.com/trilioData/tvo-automation.git',
           credentialsId: '4d26c952-7656-4a37-b58a-8ba3c9d4c5e3',
           branch: 'master'
       )
