@@ -2,7 +2,7 @@
 
 properties([
     pipelineTriggers([
-        scm('H/5 * * * *')
+        [$class: "SCMTrigger", scmpoll_spec: "H/5 * * * *"],
     ])
 ])
 
