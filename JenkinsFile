@@ -1,43 +1,20 @@
 #!/usr/bin/env groovy
 
-node('') {
-    def gVar="GlobalVar-1"
+properties([
+    pipelineTriggers([
+        scm('H/5 * * * *')
+    ])
+])
 
-	stage('Clean Environment') {
-            deleteDir()
-        }
-        
-        stage('Checkout'){
-		checkout scm
-		dir('tempest') {
-		git url: 'https://github.com/trilioData/tempest.git'
-    		}
-	}
-	
-	stage('Stage-1')
-	{
-    echo gVar
-    sh '''
-    	pwd;ls -lrt
-	chmod 777 1.sh 2.sh
-        echo ${gVar}
-	pwd
-	export gVarEx=''' + gVar + '''
-	./1.sh
-	echo ${gVarEx}
-        echo ${gVar}
-	echo ${one}
-		    '''
-	}
-		
-	stage('Stage-2')
-	{
-    echo gVar
-		sh '''
-		echo ${one}
-        echo ${gVar}
-		    ./2.sh
-		    '''
-		echo gVar
-	}
+node('') {
+  stage ('Checkout') {
+    dir('TEST1') {
+      git(
+      poll: true,
+          url: 'ssh://git@github.com:trilioData/tvo-automation.git',
+          credentialsId: '4d26c952-7656-4a37-b58a-8ba3c9d4c5e3',
+          branch: 'master'
+      )
+    }
+  }
 }
