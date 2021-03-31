@@ -47,9 +47,9 @@ node('RHV_Auto_135') {
         sh 'cat ../test.properties'
         
         build job: 'DownstreamPipeline', parameters: [
+            [$class: 'ExtendedChoiceParameterValue', name: 'STORAGE', value: STORAGE],
             [$class: 'StringParameterValue', name: 'TVAULTBUILD_NUMBER', value: TVAULTBUILD_NUMBER],
-            [$class: 'ExtendedChoiceParameterValue', name: 'STORAGES', value: STORAGE],
-            [$class: 'StringParameterValue', name: 'CONFIG', value: Config]
+            [$class: 'StringParameterValue', name: 'Config', value: Config]
             ]
     }
 }
