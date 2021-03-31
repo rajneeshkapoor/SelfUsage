@@ -20,6 +20,8 @@ node('RHV_Auto_135') {
 		    echo "Storage : ${params.STORAGE}"
 		    echo shConfig
         echo "Create Properties file"
+	pwd()
+	sh 'ls -lrt'
         sh './run.sh'
     }
 
