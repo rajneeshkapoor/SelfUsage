@@ -1,0 +1,51 @@
+#!/usr/bin/env groovy
+
+node('RHV_Auto_135') {
+    
+    properties([parameters
+		([choice(choices: ['NFS', 'AWS', 'CEPH'], description: '', name: 'STORAGE'), 
+				string(defaultValue: 'abcd', description: '', name: 'TVAULTBUILD_NUMBER', trim: false), 
+				choice(choices: ['Yes', 'No'], description: '', name: 'Config')
+		])
+	])
+
+  stage('SetParam')
+	{
+	    def shConfig = params.Config
+	    def setParamVar1 = 1
+	   
+        echo "Build num : ${params.TVAULTBUILD_NUMBER}"
+        echo TVAULTBUILD_NUMBER
+	      echo "Var1 in setParam :" + setParamVar1
+		    echo "Storage : ${params.STORAGE}"
+		    echo shConfig
+        echo "Create Properties file"
+        sh './run.sh'
+    }
+
+    stage('Read Prop File & Exec')
+    {
+        sh 'pwd'
+        
+        load "../test.properties"
+        echo "${TVAULTBUILD_NUMBER}"
+        echo "${STORAGE}"
+        echo "${Config}"
+        
+        /*
+        sh label: '', script: '''echo var="$var" > abcd
+        echo var1="$var1" >> abcd
+        echo var2="$var2" >> abcd'''
+        */
+        
+        sh 'date'
+                
+        sh 'cat ../test.properties'
+        
+        build job: 'DownstreamPipeline', parameters: [
+            [$class: 'StringParameterValue', name: 'TVAULTBUILD_NUMBER', value: TVAULTBUILD_NUMBER],
+            [$class: 'ExtendedChoiceParameterValue', name: 'STORAGES', value: STORAGE],
+            [$class: 'StringParameterValue', name: 'CONFIG', value: Config]
+            ]
+    }
+}
