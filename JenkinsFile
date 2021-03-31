@@ -16,7 +16,7 @@ node('') {
           branch: 'main'
       )
     }
-    dir('TEST1') {
+    dir('TEST2') {
       git(
       poll: true,//
           url: 'https://github.com/rajneeshkapoor/two.git',
