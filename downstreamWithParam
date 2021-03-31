@@ -10,15 +10,17 @@ node('RHV_Auto_135') {
 	])
 
   stage('SetParam')
-	{
-	    def shConfig = params.Config
-	    def setParamVar1 = 1
+  {
+	deleteDir()
+	checkout scm
+	def shConfig = params.Config
+	def setParamVar1 = 1
 	   
         echo "Build num : ${params.TVAULTBUILD_NUMBER}"
         echo TVAULTBUILD_NUMBER
-	      echo "Var1 in setParam :" + setParamVar1
-		    echo "Storage : ${params.STORAGE}"
-		    echo shConfig
+	echo "Var1 in setParam :" + setParamVar1
+	echo "Storage : ${params.STORAGE}"
+	echo shConfig
         echo "Create Properties file"
 	pwd()
 	sh 'ls -lrt'
