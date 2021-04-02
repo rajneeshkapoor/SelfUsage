@@ -10,7 +10,7 @@ node('') {
   stage ('Checkout') {
     dir('TEST1') {
       git(
-      poll: true,//
+      poll: true,
           url: 'https://github.com/rajneeshkapoor/one.git',
           credentialsId: '4d26c952-7656-4a37-b58a-8ba3c9d4c5e3',
           branch: 'main'
@@ -18,7 +18,7 @@ node('') {
     }
     dir('TEST2') {
       git(
-      poll: true,//
+      poll: true,
           url: 'https://github.com/rajneeshkapoor/two.git',
           credentialsId: '4d26c952-7656-4a37-b58a-8ba3c9d4c5e3',
           branch: 'main'
